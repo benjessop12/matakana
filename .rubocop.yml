@@ -1,0 +1,18 @@
+AllCops:
+  TargetRubyVersion: 2.7.1
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  NewCops: enable
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Metrics/BlockLength:
+  Max: 200
+  ExcludedMethods: ["describe", "context"]
+
+Metrics/ModuleLength:
+  Max: 300

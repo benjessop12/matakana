@@ -25,7 +25,7 @@ include Matakana
 First, initialize the hash. This method can be called repeatedly, however will not override the stored data unless the application ends.
 
 ```ruby
-mem_store = Matakana::DataStores.new
+mem_store = Matakana::Functions::Main.new
 ```
 
 You now have access to the basic methods version 0.0.0 introduces. There are no deletion functions (by design) so be assured of the interations.

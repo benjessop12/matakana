@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/matakana.rb'
-require_relative '../../../lib/helpers/utils.rb'
-
-include Matakana::Utils
+require_relative '../../../lib/matakana'
 
 describe Matakana do
-  let(:dummy_class) { Matakana::DataStores.new }
+  let(:dummy_class) { Matakana::Functions::Main.new }
 
   describe '#check_key' do
     let(:valid_parameter) { :valid_search_type }
@@ -25,7 +22,8 @@ describe Matakana do
 
     context 'when the parameter is not a valid key type' do
       it 'raises an error' do
-        expect { dummy_class.check_key(invalid_parameter) }.to raise_error(TypeError, /key must be a String or Symbol/)
+        expect { dummy_class.check_key(invalid_parameter) }
+          .to raise_error(TypeError, /key must be a String or Symbol/)
       end
     end
   end
@@ -52,19 +50,30 @@ describe Matakana do
   end
 
   describe '#merge_arr' do
-    let(:insert_array) { [{ key_1: 'value_1' }, { key_2: 'value_2' }, { key_1: 'value_3' }] }
+    let(:insert_array) do
+      [
+        { key_1: 'value_1' },
+        { key_2: 'value_2' },
+        { key_1: 'value_3' }
+      ]
+    end
     let(:insert_hash) { { key_1: 'value_1' } }
 
     context 'when the object is an array' do
-      let(:expected_output) { [{ key_1: %w[value_1 value_3] }, { key_2: ['value_2'] }] }
+      let(:expected_output) do
+        [
+          { key_1: %w[value_1 value_3] },
+          { key_2: ['value_2'] }
+        ]
+      end
       it 'merges the array based on the hash keys' do
-        expect(insert_array.merge_arr).to eq(expected_output)
+        expect(dummy_class.merge_arr(insert_array)).to eq(expected_output)
       end
     end
 
     context 'when the object is not an array' do
       it 'returns nil' do
-        expect(insert_hash.merge_arr).to eq(nil)
+        expect(dummy_class.merge_arr(insert_hash)).to eq(nil)
       end
     end
   end
@@ -90,7 +99,8 @@ describe Matakana do
     end
 
     it 'returns the first value if the array has one value' do
-      expect(dummy_class.value_type(non_returned_array)).to eq(non_returned_value)
+      expect(dummy_class.value_type(non_returned_array))
+        .to eq(non_returned_value)
     end
   end
 end

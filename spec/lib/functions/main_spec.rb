@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/matakana.rb'
+require_relative '../../../lib/matakana'
 
 describe Matakana do
-  let(:dummy_class) { Matakana::DataStores.new }
+  let(:dummy_class) { Matakana::Functions::Main.new }
 
   describe '#save' do
     context 'when key exists as key in core hash' do
@@ -55,7 +55,11 @@ describe Matakana do
           include_examples 'append the value correctly' do
             let(:key) { 'key_1' }
             let(:value) { { nested_hash: 'value_1' } }
-            let(:expected_output) { { key_1: ['value_0', { nested_hash: 'value_1' }] } }
+            let(:expected_output) do
+              {
+                key_1: ['value_0', { nested_hash: 'value_1' }]
+              }
+            end
           end
         end
       end
@@ -71,11 +75,27 @@ describe Matakana do
 
   describe '#bulk_save' do
     context 'when bulk data is an array type' do
-      let(:arr) { [{ key_0: 'val_0' }, { key_1: 'val_1' }, { key_2: 'val_2' }, { key_3: 'val_3' }, { key_4: 'val_4' }] }
+      let(:arr) do
+        [
+          { key_0: 'val_0' },
+          { key_1: 'val_1' },
+          { key_2: 'val_2' },
+          { key_3: 'val_3' },
+          { key_4: 'val_4' }
+        ]
+      end
 
       it 'inserts all hashes inside array to core datum hash' do
         dummy_class.bulk_save(arr)
-        expect(dummy_class.storage).to eq({ key_0: ['val_0'], key_1: ['val_1'], key_2: ['val_2'], key_3: ['val_3'], key_4: ['val_4'] })
+        expect(dummy_class.storage).to eq(
+          {
+            key_0: ['val_0'],
+            key_1: ['val_1'],
+            key_2: ['val_2'],
+            key_3: ['val_3'],
+            key_4: ['val_4']
+          },
+        )
       end
     end
 
@@ -83,8 +103,11 @@ describe Matakana do
       let(:arr) { { key_0: 'val_0', key_1: 'val_1' } }
 
       it 'does not insert to the core datum hash' do
-        dummy_class.bulk_save(arr)
-        expect(dummy_class.storage).to eq({})
+        expect { dummy_class.bulk_save(arr) }
+          .to raise_error(
+            Matakana::Exceptions::InvalidStoredType,
+            /Invalid stored type. Expected Array. Got Hash/,
+          )
       end
     end
   end
