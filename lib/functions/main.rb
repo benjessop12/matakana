@@ -50,7 +50,7 @@ module Matakana
         batch.times do |x|
           Mutex.new.synchronize do
             val = arr[idx + x]
-            save(val.keys[0], value_type(val.values))
+            save(val.keys[0], extract_values(val.values))
           end
         end
       end

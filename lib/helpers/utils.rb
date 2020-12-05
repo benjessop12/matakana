@@ -5,14 +5,13 @@ module Matakana
     # utility methods for gems
     module Utils
       def check_key(key)
-        if key.is_a?(String) || key.is_a?(Symbol)
-          key_exists?(key)
-          return
-        end
+        return store_key_if_absent(key) \
+          if key.is_a?(String) || key.is_a?(Symbol)
+
         raise TypeError, 'key must be a String or Symbol'
       end
 
-      def key_exists?(key)
+      def store_key_if_absent(key)
         return if storage.key?(key.to_sym) == true
 
         storage[key.to_sym] = []
@@ -27,10 +26,10 @@ module Matakana
              .to_a
       end
 
-      def value_type(value)
-        return value if value.count > 1
+      def extract_values(values)
+        return values if values.count > 1
 
-        value[0]
+        values.first
       end
     end
   end
