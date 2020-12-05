@@ -5,6 +5,8 @@ module Matakana
     # extended search functions
     module Search
       def fuzzy_search(term)
+        found_keys = storage.keys.grep(/#{term}/)
+        storage.values_at(*found_keys)
       end
 
       def find_by(term)
