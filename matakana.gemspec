@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'matakana/version'
@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.authors = ['Ben Jessop']
   spec.date = '2020-03-29'
   spec.summary = 'Fun utility gem for basic hash functions'
-  spec.files = 'git ls-files'.split($/)
+  spec.files = 'git ls-files'.split($RS)
   spec.require_paths = ['lib']
 
   spec.add_dependency 'facets'

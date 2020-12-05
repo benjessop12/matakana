@@ -8,7 +8,7 @@ module Matakana
         return store_key_if_absent(key) \
           if key.is_a?(String) || key.is_a?(Symbol)
 
-        raise TypeError, 'key must be a String or Symbol'
+        raise TypeError.new 'key must be a String or Symbol'
       end
 
       def store_key_if_absent(key)

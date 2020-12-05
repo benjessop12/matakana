@@ -10,6 +10,9 @@ Style/EmptyMethod:
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
+Style/RaiseArgs:
+  EnforcedStyle: compact
+
 Metrics/BlockLength:
   Max: 200
   ExcludedMethods: ["describe", "context"]
