@@ -33,4 +33,22 @@ describe Matakana do
       end
     end
   end
+
+  describe '#find_by' do
+    context 'when key exists in the core hash' do
+      before do
+        dummy_class.save('key_1', 'value_1')
+      end
+
+      it 'returns the value of the key as an array' do
+        expect(dummy_class.find_by('key_1')).to eq(['value_1'])
+      end
+    end
+
+    context 'when key does not exist in the core hash' do
+      it 'returns nil' do
+        expect(dummy_class.find_by('key_1')).to eq(nil)
+      end
+    end
+  end
 end
