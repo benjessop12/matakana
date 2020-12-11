@@ -12,7 +12,7 @@ module Matakana
       def find_by(term)
         storage.fetch term.to_sym
       rescue KeyError
-        nil
+        'Term not present'
       end
     end
   end

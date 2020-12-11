@@ -46,8 +46,8 @@ describe Matakana do
     end
 
     context 'when key does not exist in the core hash' do
-      it 'returns nil' do
-        expect(dummy_class.find_by('key_1')).to eq(nil)
+      it 'returns explicit message' do
+        expect(dummy_class.find_by('key_1')).to eq('Term not present')
       end
     end
   end
