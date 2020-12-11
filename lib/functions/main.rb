@@ -27,7 +27,7 @@ module Matakana
       end
 
       def bulk_save(arr, split_count = 5)
-        raise ::Matakana::Exceptions::InvalidStoredType.new(arr) \
+        raise ::Matakana::Exceptions::InvalidStoredType.new(arr, 'Array') \
               unless arr.is_a? Array
 
         batch = arr.size / split_count
